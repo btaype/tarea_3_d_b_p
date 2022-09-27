@@ -1,39 +1,90 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>DBP</title>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-   document.querySelector('#new-task').onsubmit = () => {
-   const cb = document.createElement("INPUT");
-cb.setAttribute("type", "checkbox");
 
-            const li = document.createElement('li');
-            li.appendChild(cb);
-li.innerHTML += document.querySelector('#task').value;
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-            document.querySelector('#tasks').append(li);
+  <title>DBP</title>
+  <script>
+    
+    function addTask() {
 
-            document.querySelector('#task').value = '';
+      const li = document.createElement("li");
+      const button = document.createElement("button");
+      const input = document.createElement("input");
 
-            return false;
-        };
+      button.innerHTML = "x";
+      button.setAttribute("onclick", "deleteTask(this)");
+      input.setAttribute("type", "checkbox");
+      input.setAttribute("onchange", "tachar(this)")
 
-    });
-    </script>
+      li.appendChild(input);
+      li.append(document.querySelector('#task').value);
 
-  </head>
-  <body>
-    <p>Computer Science</p>
-<h1>Tasks</h1>
-<form id="new-task">
-        <input id="task" autocomplete="off"
-autofocus placeholder="New Task"
-type="text">
-        <input type="submit">
-    </form>
-    <ol id="tasks">
-    </ol>
-  </body>
+      li.appendChild(button);
+      document.querySelector('#Tasks').append(li);
+      document.querySelector('#task').value = "";
+
+      return false;
+    }
+
+    function tachar(cb) {
+
+
+      if (cb.checked) {
+        const del = document.createElement("del");
+        cb_text = cb.nextSibling;
+
+        del.appendChild(cb_text);
+        cb.after(del);
+      }
+      else {
+        
+        del = cb.nextSibling;
+        texto=del.firstChild;
+        del.remove();
+        cb.after(texto);
+        
+      }
+
+      return false;
+    }
+
+    function completeAll() {
+    
+    }
+    function dell() {
+      ol = document.querySelector('#Tasks');
+      while (ol.firstElementChild) {
+        ol.firstElementChild.remove();
+      }
+
+    }
+    function deleteTask(button) {
+      li = button.parentElement;
+      li.remove();
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Tasks</h1>
+
+  <form id="newtask">
+    <input id="task" autocomplete="off" placeholder="New Tasks" type="text">
+    <input type="button" onclick="addTask()" value="envia">
+  </form>
+
+
+  <br>
+  <button type="button" onclick="completeAll()">Complete All</button> 
+  <button type="button" onclick="dell()" >Dell ALL</button>
+  <!-- <button type="button" onclick="dell()">Delete All</button> -->
+
+  <ol id="Tasks">
+   
+  </ol>
+</body>
+
 </html>
